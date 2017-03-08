@@ -5,5 +5,23 @@
 # For many examples of roles, check out Ansible Galaxy: https://galaxy.ansible.com/
 #
 ---
-- hosts: all
-  gather_facts: false
+- hosts: db
+  roles:
+    - role: shomatan.mariadb
+  vars:
+    - wp_mysql_db: wordpress
+    - wp_mysql_user: wordpress
+    - wp_mysql_password: password
+  tasks:
+    - name: Create mysql database
+      mysql_db:
+        name: "{{ wp_mysql_db }}"
+        state: present
+
+    - name: Create mysql user
+      mysql_user:
+        name: "{{ wp_mysql_user }}"
+        password: "{{ wp_mysql_password }}"
+        state: present
+        priv: "*.*:ALL,GRANT"
+        host: "%"
