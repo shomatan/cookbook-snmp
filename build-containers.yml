@@ -1,3 +1,6 @@
 ---
 - include: app/site.yml
+  tags: app
+
 - include: web/site.yml
+  tags: web

@@ -25,3 +25,14 @@
       template:
         src: wordpress.conf.j2
         dest: /etc/nginx/conf.d/wordpress.conf
+
+    - name: Copy docker endpoint script.
+      template:
+        src: docker-endpoint.sh.j2
+        dest: /docker-endpoint.sh
+        mode: 0755
+
+- hosts: localhost
+  connection: local
+  tasks:
+    - local_action: shell /usr/local/bin/docker commit web-base wordpress/nginx

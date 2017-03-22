@@ -1,2 +1,4 @@
 ---
-- src: shomatan.nginx  
+- src: shomatan.nginx
+- src: shomatan.php-fpm
+- src: shomatan.wp-cli

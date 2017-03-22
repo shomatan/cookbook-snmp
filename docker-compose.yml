@@ -1,0 +1,24 @@
+
+app:
+  image: wordpress/php-fpm
+  volumes_from:
+    - data
+  command: /docker-endpoint.sh
+
+web:
+  image: wordpress/nginx
+  volumes_from:
+    - data
+  ports:
+    - 80:80
+    - 443:443
+  environment: []
+  command: /docker-endpoint.sh
+
+data:
+  image: busybox:latest
+  volumes:
+    - /var/www/wordpress
+    - /var/run/php-fpm
+    - /var/lib/mysql
+  command: /bin/sh

@@ -19,4 +19,17 @@
         shell: /bin/sh
   roles:
     - role: shomatan.php-fpm
+      php_fpm_pool_user: webuser
+      php_fpm_pool_group: webuser
+    - role: shomatan.wp-cli
   tasks:
+    - name: Copy docker endpoint script.
+      template:
+        src: docker-endpoint.sh.j2
+        dest: /docker-endpoint.sh
+        mode: 0755
+        
+- hosts: localhost
+  connection: local
+  tasks:
+    - local_action: shell /usr/local/bin/docker commit php-base wordpress/php-fpm

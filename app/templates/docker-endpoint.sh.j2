@@ -1,0 +1,8 @@
+#!/bin/sh
+
+/usr/bin/wp core download --allow-root --locale=ja --path=/var/www/wordpress
+mkdir /var/www
+chown -R webuser:webuser /var/www/wordpress
+chmod -R 700 /var/www/wordpress
+
+exec /usr/bin/dumb-init php-fpm -F
