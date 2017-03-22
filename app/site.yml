@@ -1,0 +1,22 @@
+---
+- hosts: localhost
+  tasks:
+    - name: Create php-fpm container.
+      docker_container:
+        name: php-base
+        image: centos:7
+        command: /bin/bash
+        tty: yes
+        state: started
+
+- hosts: php-base
+  connection: docker
+  pre_tasks:
+    - name: Add web user.
+      user:
+        name: webuser
+        uid: 1000
+        shell: /bin/sh
+  roles:
+    - role: shomatan.php-fpm
+  tasks:

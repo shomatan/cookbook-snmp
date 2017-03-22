@@ -1,0 +1,27 @@
+---
+- hosts: localhost
+  tasks:
+    - name: Create nginx container.
+      docker_container:
+        name: web-base
+        image: centos:7
+        command: /bin/bash
+        tty: yes
+        state: started
+
+- hosts: web-base
+  connection: docker
+  pre_tasks:
+    - name: Add web user.
+      user:
+        name: webuser
+        uid: 1000
+        shell: /bin/sh
+  roles:
+    - role: shomatan.nginx
+      nginx_user: webuser
+  tasks:
+    - name: Copy wordpress config for nginx.
+      template:
+        src: wordpress.conf.j2
+        dest: /etc/nginx/conf.d/wordpress.conf

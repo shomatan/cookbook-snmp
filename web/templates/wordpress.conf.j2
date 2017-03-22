@@ -1,0 +1,26 @@
+server {
+    listen 80;
+
+    root /var/www/wordpress;
+    index index.php index.html;
+
+    location = /favicon.ico {
+        log_not_found off;
+        access_log off;
+    }
+
+    location ~ /\. {
+        deny all;
+    }
+
+    location / {
+      index  index.html index.htm index.php;
+  }
+
+  location ~ \.php$ {
+      fastcgi_pass   unix:/var/run/php-fpm/php-fpm.sock;
+      fastcgi_index  index.php;
+      fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+      include        fastcgi_params;
+  }
+}
