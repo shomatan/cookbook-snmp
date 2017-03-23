@@ -3,6 +3,8 @@ app:
   image: wordpress/php-fpm
   volumes_from:
     - data
+  links:
+    - db
   command: /docker-endpoint.sh
 
 web:
@@ -14,6 +16,14 @@ web:
     - 443:443
   environment: []
   command: /docker-endpoint.sh
+
+db:
+  image: mariadb:10.1.22
+  environment:
+    MYSQL_ROOT_PASSWORD: rootpassword
+    MYSQL_USER:     user
+    MYSQL_PASSWORD: password
+    MYSQL_DATABASE: wordpress
 
 data:
   image: busybox:latest
