@@ -1,0 +1,14 @@
+---
+- hosts: localhost
+  tasks:
+    - name: Destroy php-fpm container.
+      docker_container:
+        name: php-base
+        state: absent
+      tags: app
+
+    - name: Destroy nginx container.
+      docker_container:
+        name: web-base
+        state: absent
+      tags: web

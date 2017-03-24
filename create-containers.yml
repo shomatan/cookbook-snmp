@@ -1,0 +1,20 @@
+---
+- hosts: localhost
+  tasks:
+    - name: Create php-fpm container.
+      docker_container:
+        name: php-base
+        image: centos:7
+        command: /bin/bash
+        tty: yes
+        state: started
+      tags: app
+
+    - name: Create nginx container.
+      docker_container:
+        name: web-base
+        image: centos:7
+        command: /bin/bash
+        tty: yes
+        state: started
+      tags: web

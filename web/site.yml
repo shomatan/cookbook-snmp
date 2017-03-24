@@ -1,14 +1,4 @@
 ---
-- hosts: localhost
-  tasks:
-    - name: Create nginx container.
-      docker_container:
-        name: web-base
-        image: centos:7
-        command: /bin/bash
-        tty: yes
-        state: started
-
 - hosts: web-base
   connection: docker
   pre_tasks:

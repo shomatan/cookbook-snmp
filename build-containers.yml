@@ -1,6 +1,19 @@
 ---
+- include: create-containers.yml
+
 - include: app/site.yml
   tags: app
 
 - include: web/site.yml
   tags: web
+
+- hosts: localhost
+  connection: local
+  tasks:
+    - local_action: shell /usr/local/bin/docker commit php-base wordpress/php-fpm
+      tags: app
+
+    - local_action: shell /usr/local/bin/docker commit web-base wordpress/nginx
+      tags: web
+
+- include: destroy-containers.yml

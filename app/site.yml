@@ -1,14 +1,4 @@
 ---
-- hosts: localhost
-  tasks:
-    - name: Create php-fpm container.
-      docker_container:
-        name: php-base
-        image: centos:7
-        command: /bin/bash
-        tty: yes
-        state: started
-
 - hosts: php-base
   connection: docker
   pre_tasks:
@@ -28,8 +18,3 @@
         src: docker-endpoint.sh.j2
         dest: /docker-endpoint.sh
         mode: 0755
-        
-- hosts: localhost
-  connection: local
-  tasks:
-    - local_action: shell /usr/local/bin/docker commit php-base wordpress/php-fpm
